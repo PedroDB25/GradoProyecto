@@ -25,17 +25,20 @@ def get_menu(db: Session):
     salida= {}
     aux=[]
     aux2=[]
+    aux3=[]
 
     
     for lis in db.query(Menu).all():
         aux.append(lis.menu)
-    for lis in db.query(Grupo).all():
+    for lis in db.query(GrupoTransmi).all():
         aux2.append(lis.nombre)
+    for lis in db.query(GrupoRefle).all():
+        aux3.append(lis.nombre)
 
     
     salida["menu"] = aux
     salida["transmitado"] = aux2
-    salida["reflejado"] = ""
+    salida["reflejado"] = aux3
 
     return salida
 
@@ -50,6 +53,10 @@ def get_mx(db: Session, id):
     
 def get_mx_by_sigla(db: Session, sigla):
     return db.query(Mx).filter(Mx.sigla == sigla).first()
+
+def get_mxs_by_gr(db: Session, gr):
+    print(gr)
+    return db.query(Mx).filter(Mx.grupo == gr).all()
 
 def create_mx(db: Session, mx: mx):
     db_item = Mx(**mx.dict())

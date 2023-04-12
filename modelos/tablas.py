@@ -41,8 +41,15 @@ class Sistema(Base):
     nombre = Column(String, index=True)
 
 
-class Grupo(Base):
-    __tablename__ = "grupo"
+class GrupoRefle(Base):
+    __tablename__ = "grupoReflejada"
+
+    id = Column(Integer, primary_key=True, index=True)
+    indice = Column(Integer, index=True)
+    nombre = Column(String)
+
+class GrupoTransmi(Base):
+    __tablename__ = "grupoTransmitida"
 
     id = Column(Integer, primary_key=True, index=True)
     indice = Column(Integer, index=True)

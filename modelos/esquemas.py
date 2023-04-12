@@ -17,7 +17,16 @@ class menuInicio(BaseModel):
         orm_mode = True
 
 
-class grupo(BaseModel):
+class grupoReflejada(BaseModel):
+    id: int
+    indice: int
+    nombre: str
+
+    class Config:
+        orm_mode = True
+
+
+class grupoTransmitida(BaseModel):
     id: int
     indice: int
     nombre: str

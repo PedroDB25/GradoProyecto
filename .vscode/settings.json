@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:GradoProyecto}/files/ddbb/mx.sqlite",
+            "name": "1"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

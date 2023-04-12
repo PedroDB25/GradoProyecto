@@ -15,45 +15,13 @@ function cargarMenu(menuDescargado) {
 
 
   for (const li of menuDescargado.menu) {
+    //link para
     if (li.search("transmitida") >= 0) {
-      //boton en barra
-      let aux = document.createElement("li")
-      aux.className = "nav-item dropdown"
-
-      //link del boton
-      let auxa = document.createElement("a")
-      auxa.className = "nav-link dropdown-toggle"
-      auxa.id = "navbarDropdownMenuLink"
-      auxa.href = "#"
-      auxa.role = "button"
-      auxa.setAttribute("data-bs-toggle", "dropdown")
-      auxa.setAttribute("aria-expanded", "false")
-      auxa.innerHTML = li
-
-      aux.appendChild(auxa)
-
-      //Lista desplegable
-      auxlu = document.createElement("ul")
-      auxlu.className = "dropdown-menu"
-      auxlu.setAttribute("aria-labelledby", "navbarDropdownMenuLink")
-
-      for (const lis of menuDescargado.transmitado) {
-        let auxliInterno = document.createElement("li")
-        let auxAInterno = document.createElement("a")
-        auxAInterno.className = "dropdown-item"
-        auxAInterno.href = "#"
-        auxAInterno.innerHTML = lis
-        auxliInterno.appendChild(auxAInterno)
-        auxlu.appendChild(auxliInterno)
-      }
-
-      aux.appendChild(auxlu)
-      document.querySelector(".navbar-nav").appendChild(aux)
-
+      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li,menuDescargado.transmitado))
       continue
-
     }
-    if (li.search('reflejada') >= 0) {
+    if (li.search('reflejada') >= 0) { 
+      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li,menuDescargado.reflejado))
       continue
     }
     else {
@@ -63,25 +31,63 @@ function cargarMenu(menuDescargado) {
 
       let auxLink = document.createElement("a")
       auxLink.className = "nav-link"
-      auxLink.href = li.replaceAll(" ", "_").replaceAll(".", "")
+
+      auxLink.href = "#"+li.replaceAll(" ", "_").replaceAll(".", "")
+      auxLink.id = li.replaceAll(" ", "_").replaceAll(".", "")
+      auxLink.addEventListener("click", mostrarInfo)
       auxLink.innerHTML = li
       aux.appendChild(auxLink)
 
       document.querySelector(".navbar-nav").appendChild(aux)
     }
   }
-
-
 }
 
+function crearDesplegable(li,opcion){
+  contador = 1;
+  //boton en barra
+  let botonBarra = document.createElement("li")
+  botonBarra.className = "nav-item dropdown"
 
-/*<li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown link
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </li> */
+  //link del boton
+  let botonDesplegable = document.createElement("a")
+  botonDesplegable.className = "nav-link dropdown-toggle"
+  botonDesplegable.id = "navbarDropdownMenuLink"
+  botonDesplegable.href = "#"
+  botonDesplegable.role = "button"
+  botonDesplegable.setAttribute("data-bs-toggle", "dropdown")
+  botonDesplegable.setAttribute("aria-expanded", "false")
+  botonDesplegable.innerHTML = li
+
+  botonBarra.appendChild(botonDesplegable)
+
+  //Lista desplegable
+  listaDesplegable = document.createElement("ul")
+  listaDesplegable.className = "dropdown-menu"
+  listaDesplegable.setAttribute("aria-labelledby", "navbarDropdownMenuLink")
+
+  for (const lis of opcion) {
+    let auxliInterno = document.createElement("li")
+    let auxAInterno = document.createElement("a")
+    auxAInterno.className = "dropdown-item"
+    auxAInterno.href = "#" + lis.replaceAll(" ", "_").replaceAll(".", "")
+    auxAInterno.id = contador++
+    auxAInterno.innerHTML = lis
+    auxAInterno.addEventListener("click", mostrarGrupo)
+    auxliInterno.appendChild(auxAInterno)
+    listaDesplegable.appendChild(auxliInterno)
+
+  }
+
+  botonBarra.appendChild(listaDesplegable)
+
+  return botonBarra
+}
+async function mostrarGrupo(){
+  document.querySelector(".body").innerHTML = this.id
+  console.log(await solicitudesAApi("gr",this.id))
+}
+async function mostrarInfo(){
+  document.querySelector(".body").innerHTML = this.id
+  console.log(this.id)
+}
