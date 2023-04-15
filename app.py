@@ -22,8 +22,8 @@ app = FastAPI()
 print("fastApi Levantado")
 
 # Montar directorio
-app.mount("/static", StaticFiles(directory="static",html = True), name="static")
-templates = Jinja2Templates(directory="static")
+app.mount("/app/static", StaticFiles(directory="/app/static",html = True), name="static")
+templates = Jinja2Templates(directory="/app/static")
 print("Encontrada la carpeta de statics")
 
 # Dependency
@@ -74,7 +74,6 @@ async def mostrar_mx(db: Session = Depends(get_db), gr: str = ""):
         return
     return response(data=get_mxs_by_gr(db, gr), estado=200, mensaje="Success")
 
-
 @app.post("/mxs")
 async def mostrar_mx(mx: mx, db: Session = Depends(get_db)):
 
@@ -83,6 +82,5 @@ async def mostrar_mx(mx: mx, db: Session = Depends(get_db)):
     data = create_mx(db, mx)
     return response(data, estado=200, mensaje="Success")
 
-
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="0.0.0.0", port=80)
