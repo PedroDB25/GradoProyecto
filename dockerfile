@@ -5,4 +5,6 @@ RUN pip install --no-cache-dir --upgrade -r /tmp/requirements.txt
 
 COPY ./ /app
 
+ENV PYTHONPATH "${PYTHONPATH}:/app"
+
 CMD ["uvicorn", "app.app:app", "--host", "0.0.0.0", "--port", "80"]
