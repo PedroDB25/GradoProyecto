@@ -10,7 +10,7 @@ def probarConexion():
     """ create a database connection to a SQLite database """
     conn = None
     try:
-        conn = sqlite3.connect(r"C:\Users\yg-\Desktop\Proy_progra\GradoProyecto\files\ddbb\mx.sqlite")
+        conn = sqlite3.connect(r"..\files\ddbb\mx.sqlite")
         return True
     except Error as e:
         return False
