@@ -5,12 +5,13 @@ from sqlalchemy.orm import Session
 from modelos.tablas import *
 from modelos.esquemas import *
 
+rutaBaseDeDatos = (r"\app\files\ddbb\mx.sqlite")
 
 def probarConexion():
     """ create a database connection to a SQLite database """
     conn = None
     try:
-        conn = sqlite3.connect(r"..\files\ddbb\mx.sqlite")
+        conn = sqlite3.connect(rutaBaseDeDatos)
         return True
     except Error as e:
         return False
