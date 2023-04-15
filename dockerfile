@@ -7,5 +7,5 @@ COPY ./ /app
 
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 
-RUN ["chmod", "+x", "/usr/src/app/docker-entrypoint.sh"]
-CMD "./boot.sh"
+RUN ["chmod", "+x", "app/boot.sh"]
+CMD "app/boot.sh"
