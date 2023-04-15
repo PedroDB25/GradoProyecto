@@ -22,8 +22,14 @@ app = FastAPI()
 print("fastApi Levantado")
 
 # Montar directorio
-app.mount("/app/static", StaticFiles(directory="/app/static",html = True), name="static")
-templates = Jinja2Templates(directory="/app/static")
+# Para docker
+#app.mount("/app/static", StaticFiles(directory="/app/static",html = True), name="static")
+#templates = Jinja2Templates(directory="/app/static")
+
+app.mount("/static", StaticFiles(directory="static",html = True), name="static")
+templates = Jinja2Templates(directory="static")
+
+
 print("Encontrada la carpeta de statics")
 
 # Dependency
