@@ -7,5 +7,5 @@ COPY ./ /app
 
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 
-RUN ["chmod", "+x", "app/boot.sh"]
-CMD "app/boot.sh"
+RUN ["chmod", "+x", " /app/files/ddbb" , "/app/files/ddbb/mx.sqlite"]
+CMD ["uvicorn","app:app","--host","0.0.0.0","--port","80"]
