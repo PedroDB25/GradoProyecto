@@ -3,8 +3,8 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
 #para docker
-#SQLALCHEMY_DATABASE_URL = "sqlite:///app/files/ddbb/mx.sqlite"
-SQLALCHEMY_DATABASE_URL = "sqlite:///files/ddbb/mx.sqlite"
+SQLALCHEMY_DATABASE_URL = "sqlite:///app/files/ddbb/mx.sqlite"
+#SQLALCHEMY_DATABASE_URL = "sqlite:///files/ddbb/mx.sqlite"
 
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}

@@ -77,7 +77,7 @@ async def mostrar_mx(db: Session = Depends(get_db), sigla: str = ""):
 async def mostrar_mx(db: Session = Depends(get_db), gr: str = ""):
     if(gr=="0"):
         print('{"inicio":0}')
-        return
+        return '{"inicio":0}'
     return response(data=get_mxs_by_gr(db, gr), estado=200, mensaje="Success")
 
 @app.post("/mxs")
