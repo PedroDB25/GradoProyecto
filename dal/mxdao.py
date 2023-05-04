@@ -51,13 +51,14 @@ def get_mxs(db: Session):
 def get_mx(db: Session, id):
     return db.query(Mx).filter(Mx.id == id).first()
 
-    
 def get_mx_by_sigla(db: Session, sigla):
     return db.query(Mx).filter(Mx.sigla == sigla).first()
 
 def get_mxs_by_gr(db: Session, gr):
-    print(gr)
-    return db.query(Mx).filter(Mx.grupo == gr).all()
+    print("Se ha envidado el parametro: "+gr)
+    search = "%{}%".format(gr)
+    print(search)
+    return db.query(Mx).filter(Mx.grupo.like(search)).all()
 
 def create_mx(db: Session, mx: mx):
     db_item = Mx(**mx.dict())
