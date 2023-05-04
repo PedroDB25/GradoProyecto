@@ -4,7 +4,7 @@ window.onload = () => {
 }
 
 async function inicio() {
-  let menuDescargado = await solicitudesAApi("menu")
+  let menuDescargado = await solicitarMenu()
   cargarMenu(menuDescargado.data)
 }
 
@@ -85,7 +85,8 @@ function crearDesplegable(li,opcion){
 }
 async function mostrarGrupo(){
   document.querySelector(".body").innerHTML = this.id
-  console.log(await solicitudesAApi("gr",this.id))
+  let salida = await solicitarGr(this.id)
+  console.log(salida)
 }
 async function mostrarInfo(){
   document.querySelector(".body").innerHTML = this.id

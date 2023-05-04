@@ -1,15 +1,3 @@
-let mapeoRutas = new Map();
-
-async function solicitudesAApi(opcion, id = "") {
-
-    if (mapeoRutas.size == 0) {
-        mapeoRutas.set("menu", solicitarMenu());
-        mapeoRutas.set("mx", solicitarMx(id));
-        mapeoRutas.set("gr", solicitarGr(id));
-    }
-    return mapeoRutas.get(opcion)
-}
-
 function solicitarMenu() {
     return fetch("menu")
         // Exito
