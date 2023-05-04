@@ -84,11 +84,96 @@ function crearDesplegable(li,opcion){
   return botonBarra
 }
 async function mostrarGrupo(){
-  document.querySelector(".body").innerHTML = this.id
   let salida = await solicitarGr(this.id)
+  document.querySelector(".body").innerHTML="";
+
   console.log(salida)
+  //Mostrar cartas con los minerales recopilados
+  for (const mx of salida.data) {
+    let LinkParaPedirDatos = document.createElement("a")
+    LinkParaPedirDatos.href = "#mx/"+ mx.sigla
+
+    
+    let cartablock = document.createElement("div");
+    let cartadentro = document.createElement("div");
+    let cartafront = document.createElement("div");
+    let cartaback = document.createElement("div");
+
+    cartablock.className = "flip-card";
+    cartadentro.className = "flip-card-inner";
+    cartafront.className = "flip-card-front";
+    cartaback.className = "flip-card-back";
+
+    //Frente de la carta
+    let esquema = document.createElement("div");
+    let nombreYsigla = document.createElement("h2");
+    let formula = document.createElement("p");
+    let sistemayGrupo = document.createElement("p");
+
+    nombreYsigla.innerHTML = `${mx.nombre} (${mx.sigla})`;
+    formula.innerHTML = mx.formula;
+    sistemayGrupo.innerHTML = `${mx.sistema} - ${mx.grupo}`;
+
+    cartafront.appendChild(esquema)
+    cartafront.appendChild(nombreYsigla)
+    cartafront.appendChild(formula)
+    cartafront.appendChild(sistemayGrupo)
+
+    //Atras de la carta
+    let color = document.createElement("p");
+    let relieve = document.createElement("p");
+    let IRefraccion = document.createElement("p");
+    let birrefringencia = document.createElement("p");
+    let orientacion = document.createElement("p");
+    let elongacion = document.createElement("p");
+    let extincion = document.createElement("p");
+    let signo = document.createElement("p");
+
+    color.innerHTML = mx.color;
+    relieve.innerHTML = mx.relieve;
+    IRefraccion.innerHTML = mx.IRefraccion;
+    birrefringencia.innerHTML = mx.birrefringencia;
+    orientacion.innerHTML =  mx.orientacion;
+    elongacion.innerHTML =  mx.elongacion;
+    elongacion.innerHTML =  mx.elongacion;
+    signo.innerHTML =  mx.signo;
+
+    cartaback.appendChild(color)
+    cartaback.appendChild(relieve)
+    cartaback.appendChild(IRefraccion)
+    cartaback.appendChild(birrefringencia)
+    cartaback.appendChild(orientacion)
+    cartaback.appendChild(elongacion)
+    cartaback.appendChild(extincion)
+    cartaback.appendChild(signo)
+
+
+
+    cartadentro.appendChild(cartafront)
+    cartadentro.appendChild(cartaback)
+    cartablock.appendChild(cartadentro)
+    LinkParaPedirDatos.appendChild(cartablock)
+    document.querySelector(".body").appendChild(LinkParaPedirDatos)
+  }
 }
 async function mostrarInfo(){
   document.querySelector(".body").innerHTML = this.id
   console.log(this.id)
 }
+
+/*
+
+    <back>
+
+    
+      <p>IRefraccion</p>
+      <p>birrefringencia</p>
+      <p>colorInter</p>
+      <p>orientacion</p>
+      <p>elongacion</p>
+      <p>extincion</p>
+      <p>signo</p>
+      <p>otros</p>
+      <p>asociaciones</p>
+      <p>alteraciones</p>
+*/

@@ -1,0 +1,17 @@
+nav{
+    height: 8vh;
+}
+.body {
+    background: linear-gradient(to left top,gray,white, rgba(0, 0, 255, 0.192),  white);
+    min-height: 85vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1em;
+    padding: 2em 0;
+}
+
+.footer {
+    background-color: yellowgreen;
+    height: 7vh;
+}
