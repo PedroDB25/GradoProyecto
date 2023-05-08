@@ -9,15 +9,10 @@ async function inicio() {
 }
 
 function cargarMenu(menuDescargado) {
-
-  console.log(Object.keys(menuDescargado))
-  console.log(menuDescargado)
-
-
   for (const li of menuDescargado.menu) {
     //link para
     if (li.search("transmitida") >= 0) {
-      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li,menuDescargado.transmitado))
+      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li,menuDescargado.grupoSilicatos))
       continue
     }
     if (li.search('reflejada') >= 0) { 
@@ -44,7 +39,7 @@ function cargarMenu(menuDescargado) {
 }
 
 function crearDesplegable(li,opcion){
-  contador = 1;
+  contador = 0;
   //boton en barra
   let botonBarra = document.createElement("li")
   botonBarra.className = "nav-item dropdown"

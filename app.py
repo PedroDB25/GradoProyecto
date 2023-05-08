@@ -25,11 +25,6 @@ print("fastApi Levantado")
 # Para docker
 app.mount("/app/static", StaticFiles(directory="/app/static",html = True), name="static")
 templates = Jinja2Templates(directory="/app/static")
-
-#app.mount("/static", StaticFiles(directory="static",html = True), name="static")
-#templates = Jinja2Templates(directory="static")
-
-
 print("Encontrada la carpeta de statics")
 
 # Dependency
@@ -74,10 +69,7 @@ async def mostrar_mx(db: Session = Depends(get_db), sigla: str = ""):
 
 #Retorna un grupo de minerales por su grupo
 @app.get("/gr/{gr}")
-async def mostrar_mx(db: Session = Depends(get_db), gr: str = ""):
-    if(gr=="0"):
-        print('{"inicio":0}')
-        return '{"inicio":0}'
+async def mostrar_gr(db: Session = Depends(get_db), gr: str = ""):
     return response(data=get_mxs_by_gr(db, gr), estado=200, mensaje="Success")
 
 @app.post("/mxs")
