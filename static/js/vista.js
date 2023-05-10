@@ -1,6 +1,5 @@
 window.onload = () => {
   inicio()
-
 }
 
 async function inicio() {
@@ -12,11 +11,11 @@ function cargarMenu(menuDescargado) {
   for (const li of menuDescargado.menu) {
     //link para
     if (li.search("transmitida") >= 0) {
-      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li,menuDescargado.grupoSilicatos))
+      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.grupoSilicatos))
       continue
     }
-    if (li.search('reflejada') >= 0) { 
-      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li,menuDescargado.reflejado))
+    if (li.search('reflejada') >= 0) {
+      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.reflejado))
       continue
     }
     else {
@@ -27,7 +26,7 @@ function cargarMenu(menuDescargado) {
       let auxLink = document.createElement("a")
       auxLink.className = "nav-link"
 
-      auxLink.href = "#"+li.replaceAll(" ", "_").replaceAll(".", "")
+      auxLink.href = "#" + li.replaceAll(" ", "_").replaceAll(".", "")
       auxLink.id = li.replaceAll(" ", "_").replaceAll(".", "")
       auxLink.addEventListener("click", mostrarInfo)
       auxLink.innerHTML = li
@@ -38,7 +37,7 @@ function cargarMenu(menuDescargado) {
   }
 }
 
-function crearDesplegable(li,opcion){
+function crearDesplegable(li, opcion) {
   contador = 0;
   //boton en barra
   let botonBarra = document.createElement("li")
@@ -78,17 +77,17 @@ function crearDesplegable(li,opcion){
 
   return botonBarra
 }
-async function mostrarGrupo(){
+async function mostrarGrupo() {
   let salida = await solicitarGr(this.id)
-  document.querySelector(".body").innerHTML="";
-
-  console.log(salida)
+  document.querySelector(".body").innerHTML = "";
   //Mostrar cartas con los minerales recopilados
   for (const mx of salida.data) {
-    let LinkParaPedirDatos = document.createElement("a")
-    LinkParaPedirDatos.href = "#mx/"+ mx.sigla
 
+    if(mx.grupo != `[${this.id}]`) continue
     
+    let LinkParaPedirDatos = document.createElement("a")
+    LinkParaPedirDatos.href = "#mx/" + mx.sigla
+
     let cartablock = document.createElement("div");
     let cartadentro = document.createElement("div");
     let cartafront = document.createElement("div");
@@ -115,7 +114,6 @@ async function mostrarGrupo(){
     cartafront.appendChild(sistemayGrupo)
 
     //Atras de la carta
-    let color = document.createElement("p");
     let relieve = document.createElement("p");
     let IRefraccion = document.createElement("p");
     let birrefringencia = document.createElement("p");
@@ -124,16 +122,14 @@ async function mostrarGrupo(){
     let extincion = document.createElement("p");
     let signo = document.createElement("p");
 
-    color.innerHTML = mx.color;
     relieve.innerHTML = mx.relieve;
     IRefraccion.innerHTML = mx.IRefraccion;
     birrefringencia.innerHTML = mx.birrefringencia;
-    orientacion.innerHTML =  mx.orientacion;
-    elongacion.innerHTML =  mx.elongacion;
-    elongacion.innerHTML =  mx.elongacion;
-    signo.innerHTML =  mx.signo;
+    orientacion.innerHTML = mx.orientacion;
+    elongacion.innerHTML = mx.elongacion;
+    elongacion.innerHTML = mx.elongacion;
+    signo.innerHTML = mx.signo;
 
-    cartaback.appendChild(color)
     cartaback.appendChild(relieve)
     cartaback.appendChild(IRefraccion)
     cartaback.appendChild(birrefringencia)
@@ -142,33 +138,18 @@ async function mostrarGrupo(){
     cartaback.appendChild(extincion)
     cartaback.appendChild(signo)
 
-
-
     cartadentro.appendChild(cartafront)
     cartadentro.appendChild(cartaback)
     cartablock.appendChild(cartadentro)
     LinkParaPedirDatos.appendChild(cartablock)
+    cartablock.addEventListener("click", mostrarDatosMineral)
     document.querySelector(".body").appendChild(LinkParaPedirDatos)
   }
 }
-async function mostrarInfo(){
+async function mostrarInfo() {
   document.querySelector(".body").innerHTML = this.id
   console.log(this.id)
 }
-
-/*
-
-    <back>
-
-    
-      <p>IRefraccion</p>
-      <p>birrefringencia</p>
-      <p>colorInter</p>
-      <p>orientacion</p>
-      <p>elongacion</p>
-      <p>extincion</p>
-      <p>signo</p>
-      <p>otros</p>
-      <p>asociaciones</p>
-      <p>alteraciones</p>
-*/
+async function mostrarDatosMineral() {
+  console.log(this)
+}

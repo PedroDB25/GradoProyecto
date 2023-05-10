@@ -34,7 +34,7 @@ async def get_db():
     db = SessionLocal()
     try:
         yield db
-        print("BBDD conectada corretamente" if probarConexion()
+        print("BBDD conectada corretamente" if probar_conexion()
               else "BBDD con problemas")
     finally:
         db.close()

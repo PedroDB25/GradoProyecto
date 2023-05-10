@@ -15,7 +15,6 @@ function solicitarMx(id) {
 
 }
 function solicitarGr(gr) {
-    if(gr == ""){gr = 0}
     return fetch("gr/" + gr)
         // Exito
         .then(response => response.json())  // convertir a json

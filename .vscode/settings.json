@@ -7,5 +7,9 @@
             "name": "1"
         }
     ],
-    "sqltools.useNodeRuntime": true
+    "sqltools.useNodeRuntime": true,
+    "settings": {
+        "python.pythonPath": "/workspaces/GradoProyecto",
+        "python.venvPath": "/workspaces/GradoProyecto"
+    }
 }
