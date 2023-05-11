@@ -99,6 +99,7 @@ async function mostrarGrupo() {
     cartaback.className = "flip-card-back";
 
     //Frente de la carta
+    let img = document.createElement("img");
     let esquema = document.createElement("div");
     let nombreYsigla = document.createElement("h2");
     let formula = document.createElement("p");

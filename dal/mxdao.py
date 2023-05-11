@@ -5,10 +5,11 @@ import sqlite3
 from sqlite3 import Error
 from sqlalchemy.orm import Session
 
-from modelos.tablas import Mx,Sistema,GrupoRefle,Menu
+from modelos.tablas import *
 from modelos.esquemas import mx
 
-RUTA_BASE_DATOS = r"\app\files\ddbb\mx.sqlite"
+#RUTA_BASE_DATOS = r"\app\files\ddbb\mx.sqlite"
+RUTA_BASE_DATOS = r"\files\ddbb\mx.sqlite"
 
 
 def probar_conexion():

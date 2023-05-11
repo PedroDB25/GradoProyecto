@@ -1,6 +1,5 @@
 from fastapi import Depends, FastAPI
 
-from fastapi.middleware.cors import CORSMiddleware
 from dal.mxdao import *
 from modelos.response import response
 
@@ -22,9 +21,10 @@ app = FastAPI()
 print("fastApi Levantado")
 
 # Montar directorio
-# Para docker
-app.mount("/app/static", StaticFiles(directory="/app/static",html = True), name="static")
-templates = Jinja2Templates(directory="/app/static")
+#app.mount("/app/static", StaticFiles(directory="/app/static",html = True), name="static")
+#templates = Jinja2Templates(directory="/app/static")
+app.mount("/static", StaticFiles(directory="static",html = True), name="static")
+templates = Jinja2Templates(directory="static")
 print("Encontrada la carpeta de statics")
 
 # Dependency
