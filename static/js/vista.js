@@ -105,14 +105,19 @@ async function mostrarGrupo() {
     let formula = document.createElement("p");
     let sistemayGrupo = document.createElement("p");
 
-    nombreYsigla.innerHTML = `${mx.nombre} (${mx.sigla})`;
-    formula.innerHTML = mx.formula;
+    img.src=`/static/img/0${mx.sigla}.png`
+    nombreYsigla.innerHTML = `${mx.nombre}(${mx.sigla})`;
+    formula.innerHTML = `<code>${mx.formula.replaceAll(" ","")}</code>`;
     sistemayGrupo.innerHTML = `${mx.sistema} - ${mx.grupo}`;
 
+    img.className="img-fluid imagen";
+    formula.className="formula";
+
+    esquema.appendChild(nombreYsigla)
+    esquema.appendChild(formula)
+    esquema.appendChild(sistemayGrupo)
     cartafront.appendChild(esquema)
-    cartafront.appendChild(nombreYsigla)
-    cartafront.appendChild(formula)
-    cartafront.appendChild(sistemayGrupo)
+    cartafront.appendChild(img)
 
     //Atras de la carta
     let relieve = document.createElement("p");

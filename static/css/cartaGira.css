@@ -48,3 +48,19 @@
     margin: 0;
     padding: 0;
   }
+  .imagen{
+    width: 100%;
+    height: 100%;
+  }
+  .flip-card-front div{
+    position: absolute;
+    text-align: start;
+    padding: 1em;
+  }
+  .flip-card-front{
+    display: flex;
+    justify-content: flex-start;
+  }
+  .formula{
+    font-size: .9em;
+  }
