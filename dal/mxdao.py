@@ -30,6 +30,8 @@ def get_menu(db: Session):
     aux=[]
     aux2=[]
     aux3=[]
+    aux4=[]
+    aux5=[]
 
     for lis in db.query(Menu).all():
         aux.append(lis.menu)
@@ -37,10 +39,16 @@ def get_menu(db: Session):
         aux2.append(lis.nombre)
     for lis in db.query(GrupoRefle).all():
         aux3.append(lis.nombre)
+    for lis in db.query(PMineralogicas).all():
+        aux4.append(lis.propiedad)
+    for lis in db.query(POpticas).all():
+        aux5.append(lis.nombre)
 
     salida["menu"] = aux
     salida["grupoSilicatos"] = aux2
     salida["reflejado"] = aux3
+    salida["mineralogicas"] = aux4
+    salida["opticas"] = aux5
 
     return salida
 

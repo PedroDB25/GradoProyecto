@@ -4,7 +4,8 @@ from dal.ORM import Base
 
 
 class Mx(Base):
-    __tablename__ = "mx"
+    __tablename__ = "mxTransmitida"
+    #mxReflejado
 
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String)
@@ -59,3 +60,15 @@ class Menu(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     menu = Column(String)
+
+class PMineralogicas(Base):
+    __tablename__ = "PropiedadesMineralogicas"
+
+    id = Column(Integer, primary_key=True, index=True)
+    propiedad = Column(String)
+
+class POpticas(Base):
+    __tablename__ = "PropiedadesOpticas"
+
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String)

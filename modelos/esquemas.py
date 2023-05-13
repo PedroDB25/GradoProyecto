@@ -67,3 +67,17 @@ class mx(BaseModel):
         orm_mode = True
 
 
+class pmineralogicas(BaseModel):
+    id: int
+    propiedad :str
+
+    class Config:
+        orm_mode = True
+
+class popticas(BaseModel):
+
+    id: int
+    nombre :str
+
+    class Config:
+        orm_mode = True
