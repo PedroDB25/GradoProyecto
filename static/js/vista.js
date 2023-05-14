@@ -5,26 +5,25 @@ window.onload = () => {
 async function inicio() {
   let menuDescargado = await solicitarMenu()
   cargarMenu(menuDescargado.data)
-  console.log(menuDescargado)
 }
 
 function cargarMenu(menuDescargado) {
   for (const li of menuDescargado.menu) {
     //link para
     if (li.search("transmitida") >= 0) {
-      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.grupoSilicatos,0))
+      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.grupoSilicatos, 0))
       continue
     }
     if (li.search('reflejada') >= 0) {
-      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.reflejado,1))
+      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.reflejado, 1))
       continue
     }
     if (li.search('opticas') >= 0) {
-      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.opticas,2))
+      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.opticas, 2))
       continue
     }
     if (li.search('mineralogicas') >= 0) {
-      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.mineralogicas,3))
+      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.mineralogicas, 3))
       continue
     }
     else {
@@ -46,7 +45,7 @@ function cargarMenu(menuDescargado) {
   }
 }
 
-function crearDesplegable(li, opcion,indice) {
+function crearDesplegable(li, opcion, indice) {
   contador = 0;
   //boton en barra
   let botonBarra = document.createElement("li")
@@ -77,10 +76,10 @@ function crearDesplegable(li, opcion,indice) {
     auxAInterno.id = contador++
     auxAInterno.innerHTML = lis
 
-    if(indice==0){
+    if (indice == 0) {
       auxAInterno.addEventListener("click", mostrarGrupoTransmitida)
     }
-    if(indice==1){
+    if (indice == 1) {
       auxAInterno.addEventListener("click", mostrarGrupoReflejada)
     }
 
@@ -93,15 +92,13 @@ function crearDesplegable(li, opcion,indice) {
 
   return botonBarra
 }
-async function mostrarGrupoReflejada() {}
-  async function mostrarGrupoTransmitida() {
-  let salida = await solicitarGr(this.id)
-  document.querySelector(".body").innerHTML = "";
-  //Mostrar cartas con los minerales recopilados
-  for (const mx of salida.data) {
+async function mostrarGrupoReflejada() {
+  let salida = await solicitarGrRefl(this.id)
 
-    if(mx.grupo != `[${this.id}]`) continue
-    
+  document.querySelector(".body").innerHTML = "";
+  for (const mx of salida.data) {
+    if (mx.grupo != `${this.id}`) continue
+
     let LinkParaPedirDatos = document.createElement("a")
     LinkParaPedirDatos.href = "#mx/" + mx.sigla
 
@@ -123,16 +120,103 @@ async function mostrarGrupoReflejada() {}
     let grupo = document.createElement("p");
     let sistema = document.createElement("p");
 
-    img.src=`/static/img/0${mx.sigla}.png`
+    img.src = `/static/img/0${mx.sigla}.png`
     nombreYsigla.innerHTML = `${mx.nombre}(${mx.sigla})`;
-    formula.innerHTML = `<code>${mx.formula.replaceAll(" ","")}</code>`;
-    grupo.innerHTML = `${traductorDeGrupos(mx.grupo)}`;
-    sistema.innerHTML = `${traductorDeSistemas(mx.sistema)}`;
+    formula.innerHTML = `<code>${mx.formula.replaceAll(" ", "")}</code>`;
+    grupo.innerHTML = `${traduccion(2,mx.grupo.toString())}`;
 
-    img.className="img-fluid imagen";
+    img.className = "img-fluid imagen";
     img.setAttribute("onerror", `this.src="/static/img/error.png"`)
+    cartablock.dataset.bsToggle = "modal"
+    cartablock.dataset.bsTarget = "#exampleModal"
 
-    formula.className="formula";
+    formula.className = "formula";
+
+    esquema.appendChild(nombreYsigla)
+    esquema.appendChild(formula)
+    esquema.appendChild(grupo)
+    esquema.appendChild(sistema)
+    cartafront.appendChild(esquema)
+    cartafront.appendChild(img)
+
+    //Atras de la carta
+    /*
+    let relieve = document.createElement("p");
+    let IRefraccion = document.createElement("p");
+    let birrefringencia = document.createElement("p");
+    let orientacion = document.createElement("p");
+    let elongacion = document.createElement("p");
+    let extincion = document.createElement("p");
+    let signo = document.createElement("p");
+
+    relieve.innerHTML = mx.relieve;
+    IRefraccion.innerHTML = mx.IRefraccion;
+    birrefringencia.innerHTML = mx.birrefringencia;
+    orientacion.innerHTML = mx.orientacion;
+    elongacion.innerHTML = mx.elongacion;
+    elongacion.innerHTML = mx.elongacion;
+    signo.innerHTML = mx.signo;
+
+    cartaback.appendChild(relieve)
+    cartaback.appendChild(IRefraccion)
+    cartaback.appendChild(birrefringencia)
+    cartaback.appendChild(orientacion)
+    cartaback.appendChild(elongacion)
+    cartaback.appendChild(extincion)
+    cartaback.appendChild(signo)
+    */
+
+    cartadentro.appendChild(cartafront)
+    cartadentro.appendChild(cartaback)
+    cartablock.appendChild(cartadentro)
+    LinkParaPedirDatos.appendChild(cartablock)
+    cartablock.addEventListener("click", mostrarDatosMineral)
+    document.querySelector(".body").appendChild(LinkParaPedirDatos)
+  }
+
+}
+async function mostrarGrupoTransmitida() {
+  let salida = await solicitarGr(this.id)
+  document.querySelector(".body").innerHTML = "";
+  //Mostrar cartas con los minerales recopilados
+  for (const mx of salida.data) {
+
+    if (mx.grupo != `[${this.id}]`) continue
+
+    let LinkParaPedirDatos = document.createElement("a")
+    LinkParaPedirDatos.href = "#mx/" + mx.sigla
+
+    let cartablock = document.createElement("div");
+    let cartadentro = document.createElement("div");
+    let cartafront = document.createElement("div");
+    let cartaback = document.createElement("div");
+
+    cartablock.className = "flip-card";
+    cartadentro.className = "flip-card-inner";
+    cartafront.className = "flip-card-front";
+    cartaback.className = "flip-card-back";
+
+    //Frente de la carta
+    let img = document.createElement("img");
+    let esquema = document.createElement("div");
+    let nombreYsigla = document.createElement("h2");
+    let formula = document.createElement("p");
+    let grupo = document.createElement("p");
+    let sistema = document.createElement("p");
+
+    img.src = `/static/img/0${mx.sigla}.png`
+    nombreYsigla.innerHTML = `${mx.nombre}(${mx.sigla})`;
+    formula.innerHTML = `<code>${mx.formula.replaceAll(" ", "")}</code>`;
+    grupo.innerHTML = `${traduccion(0,mx.grupo)}`;
+    sistema.innerHTML = `${traduccion(1,mx.sistema)}`;
+
+    img.className = "img-fluid imagen";
+    img.setAttribute("onerror", `this.src="/static/img/error.png"`)
+    cartablock.dataset.bsToggle = "modal"
+    cartablock.dataset.bsTarget = "#exampleModal"
+
+
+    formula.className = "formula";
 
     esquema.appendChild(nombreYsigla)
     esquema.appendChild(formula)
@@ -181,41 +265,30 @@ async function mostrarInfo() {
   document.querySelector(".body").innerHTML = this.id
   console.log(this.id)
 }
-function traductorDeGrupos(grupo){
-  let salida =""
-  grupo = grupo.replaceAll(/[\[\] ,-]/g,"")
-  salida = `${maps(2).get(parseInt(grupo))}`
-  
-  return salida
-}
-function traductorDeSistemas(sistema){
+function traduccion (n, texto){
   let salida = ""
-  sistema = sistema.replaceAll(/[\[\] ,-]/g,"")
-
-  for (const str of sistema.split("")) {
-    salida = `${salida}, ${maps(1).get(parseInt(str))}`
+  texto = texto.replaceAll(/[\[\] ,-]/g, "")
+  if(n==0){
+    return `${maps(0).get(parseInt(texto))}`
   }
-  return salida.substring(2)
+  if(n==1){
+    for (const str of texto.split("")) {
+      salida = `${salida}, ${maps(1).get(parseInt(str))}`
+    }
+    return salida.substring(2)
+  }
+  if(n==2){
+    return `${maps(2).get(parseInt(texto))}`
+  }
 }
 
-function maps(n){
+function maps(n) {
   const map1 = new Map();
-  if(n==1){
-    map1.set(0, "Cubico");
-    map1.set(1, "Tetragonal");
-    map1.set(2, "Hexagonal");
-    map1.set(3, "Trigonal");
-    map1.set(4, "Rombico");
-    map1.set(5, "Monoclinico");
-    map1.set(6, "Triclinico");
-
-    return map1
-  } 
-  if(n==2){
+  if (n == 0) {
     map1.set(0, "Nesosilicatos");
     map1.set(1, "Sorosilicatos");
     map1.set(2, "Ciclosilicatos ");
-    map1.set(3, "Inosilicatos Simple");
+    map1.set(3, "Inosilicatos simple");
     map1.set(4, "Inosilicatos doble");
     map1.set(5, "Filosilicatos");
     map1.set(6, "Tectosilicatos");
@@ -225,4 +298,25 @@ function maps(n){
     map1.set(10, "Óxidos e hidróxidos");
     return map1
   }
+  if (n == 1) {
+    map1.set(0, "Cubico");
+    map1.set(1, "Tetragonal");
+    map1.set(2, "Hexagonal");
+    map1.set(3, "Trigonal");
+    map1.set(4, "Rombico");
+    map1.set(5, "Monoclinico");
+    map1.set(6, "Triclinico");
+
+    return map1
+  }
+  if (n == 2) {
+    map1.set(0, "Sulfuros y sulfosales");
+    map1.set(1, "Oxidos e hidroxidos");
+    map1.set(2, "Nativos");
+    map1.set(3, "Silicatos");
+    map1.set(4, "Otros");
+
+    return map1
+  }
+  
 }

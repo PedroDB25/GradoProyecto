@@ -34,7 +34,7 @@ class grupoTransmitida(BaseModel):
     class Config:
         orm_mode = True
 
-class mx(BaseModel):
+class mxtr(BaseModel):
 
     id: int
     sigla: str

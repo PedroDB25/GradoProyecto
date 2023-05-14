@@ -22,3 +22,11 @@ function solicitarGr(gr) {
         .catch(err => console.log('Solicitud fallida', err)); // Capturar errores
 
 }
+function solicitarGrRefl(gr) {
+    return fetch("grrefle/" + gr)
+        // Exito
+        .then(response => response.json())  // convertir a json
+        .then(json => json)    //sacar json
+        .catch(err => console.log('Solicitud fallida', err)); // Capturar errores
+
+}

@@ -3,9 +3,9 @@ from sqlalchemy.orm import relationship
 from dal.ORM import Base
 
 
-class Mx(Base):
+class MxTr(Base):
     __tablename__ = "mxTransmitida"
-    #mxReflejado
+    #mxTransmitida
 
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String)
@@ -72,3 +72,13 @@ class POpticas(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String)
+
+class MxRef(Base):
+    __tablename__ = "mxReflejado"
+    #mxReflejado
+
+    id = Column(Integer, primary_key=True, index=True)
+    nombre = Column(String)
+    sigla = Column(String)
+    grupo = Column(Integer)
+    formula = Column(String)

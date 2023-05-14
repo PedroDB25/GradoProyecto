@@ -6,7 +6,7 @@ from sqlite3 import Error
 from sqlalchemy.orm import Session
 
 from modelos.tablas import *
-from modelos.esquemas import mx
+from modelos.esquemas import mxtr
 
 #RUTA_BASE_DATOS = r"\app\files\ddbb\mx.sqlite"
 RUTA_BASE_DATOS = r"\files\ddbb\mx.sqlite"
@@ -55,24 +55,29 @@ def get_menu(db: Session):
 #minerales
 def get_mxs(db: Session):
     """ Metodo para obtener todos los minerales """
-    return db.query(Mx).all()
+    return db.query(MxTr).all()
 
 def get_mx(db: Session, id):
     """ Metodo para obtener el primer mineral con este id """
-    return db.query(Mx).filter(Mx.id == id).first()
+    return db.query(MxTr).filter(MxTr.id == id).first()
 
 def get_mx_by_sigla(db: Session, sigla):
     """ Metodo para obtener el primer mineral con esta sigla """
-    return db.query(Mx).filter(Mx.sigla == sigla).first()
+    return db.query(MxTr).filter(MxTr.sigla == sigla).first()
 
 def get_mxs_by_gr(db: Session, gr):
-    """ Metodo para obtener todos minerales de este grupo """
+    """ Metodo para obtener todos minerales de este grupo (transmitidos)"""
     search = f"%{gr}%"
-    return db.query(Mx).filter(Mx.grupo.like(search)).all()
+    return db.query(MxTr).filter(MxTr.grupo.like(search)).all()
 
-def create_mx(db: Session, mx: mx):
+def get_mxs_by_grrefle(db: Session, gr):
+    """ Metodo para obtener todos minerales de este grupo (reflejados)"""
+    search = f"%{gr}%"
+    return db.query(MxRef).filter(MxRef.grupo.like(search)).all()
+
+def create_mx(db: Session, mxtr: mxtr):
     """ Metodo para crear minerales """
-    db_item = Mx(**mx.dict())
+    db_item = MxTr(**mxtr.dict())
     db.add(db_item)
     db.commit()
     db.refresh(db_item)

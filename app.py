@@ -59,12 +59,8 @@ async def mostrar_mx(db: Session = Depends(get_db)):
     return response(get_menu(db), estado=200, mensaje="Success")
 
 #Retorna un mineral por su sigla
-@app.get("/mx/{sigla}")
+@app.get("/mxtr/{sigla}")
 async def mostrar_mx(db: Session = Depends(get_db), sigla: str = ""):
-    if(sigla==""):
-        print('{"inicio":0}')
-        return
-
     return response(data=get_mx_by_sigla(db, sigla), estado=200, mensaje="Success")
 
 #Retorna un grupo de minerales por su grupo
@@ -72,12 +68,17 @@ async def mostrar_mx(db: Session = Depends(get_db), sigla: str = ""):
 async def mostrar_gr(db: Session = Depends(get_db), gr: str = ""):
     return response(data=get_mxs_by_gr(db, gr), estado=200, mensaje="Success")
 
-@app.post("/mxs")
-async def mostrar_mx(mx: mx, db: Session = Depends(get_db)):
+#Retorna un grupo de minerales reflejado
+@app.get("/grrefle/{gr}")
+async def mostrar_gr(db: Session = Depends(get_db), gr: str = ""):
+    return response(data=get_mxs_by_grrefle(db, gr), estado=200, mensaje="Success")
 
-    if get_mx(db, mx.id):
+@app.post("/mxs")
+async def mostrar_mx(mxtr: mxtr, db: Session = Depends(get_db)):
+
+    if get_mx(db, mxtr.id):
         return response("Mineral ya existente", estado=400, mensaje="Error")
-    data = create_mx(db, mx)
+    data = create_mx(db, mxtr)
     return response(data, estado=200, mensaje="Success")
 
 if __name__ == "__main__":
