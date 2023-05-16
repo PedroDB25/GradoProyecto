@@ -60,6 +60,7 @@ class Menu(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     menu = Column(String)
+    html = Column(String)
 
 class PMineralogicas(Base):
     __tablename__ = "PropiedadesMineralogicas"

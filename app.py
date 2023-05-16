@@ -57,6 +57,10 @@ async def mostrar_mx(db: Session = Depends(get_db), id: int = -1):
 @app.get("/menu")
 async def mostrar_mx(db: Session = Depends(get_db)):
     return response(get_menu(db), estado=200, mensaje="Success")
+#Retorna el menu del HTML
+@app.get("/html")
+async def mostrar_mx(db: Session = Depends(get_db), id: str = ""):
+    return response(get_html(db,id), estado=200, mensaje="Success")
 
 #Retorna un mineral por su sigla
 @app.get("/mxtr/{sigla}")

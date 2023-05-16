@@ -16,7 +16,6 @@ class menuInicio(BaseModel):
     class Config:
         orm_mode = True
 
-
 class grupoReflejada(BaseModel):
     id: int
     indice: int

@@ -6,6 +6,14 @@ function solicitarMenu() {
         .catch(err => console.log('Solicitud fallida', err)); // Capturar errores
 
 }
+function solicitarHTML(id) {
+    return fetch(`html?id=${id}`)
+        // Exito
+        .then(response => response.json())  // convertir a json
+        .then(json => json)    //sacar json
+        .catch(err => console.log('Solicitud fallida', err)); // Capturar errores
+
+}
 function solicitarMx(id) {
     return fetch("mxs/" + id)
         // Exito

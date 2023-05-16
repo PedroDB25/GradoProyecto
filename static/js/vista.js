@@ -262,8 +262,18 @@ async function mostrarDatosMineral() {
   console.log(this)
 }
 async function mostrarInfo() {
-  document.querySelector(".body").innerHTML = this.id
-  console.log(this.id)
+  document.querySelector(".body").innerHTML = ""
+  let html2 = ""
+  let dato = await solicitarHTML(this.id)
+  let link = `static\\fragmentosHtml\\${dato.data.html}`
+  html2 =fetch(link).then(function (response) {
+    return response.text();
+  }).then(function (html) {
+    var parser = new DOMParser();
+    var doc = parser.parseFromString(html, 'text/html');
+    return  doc
+  });
+  document.querySelector(".body").innerHTML = (await html2).querySelector("body").innerHTML
 }
 function traduccion (n, texto){
   let salida = ""

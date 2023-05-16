@@ -52,6 +52,11 @@ def get_menu(db: Session):
 
     return salida
 
+def get_html(db: Session, id):
+    """ Metodo para obtener html """
+    print(id)
+    return db.query(Menu).filter(Menu.menu == id).first()
+
 #minerales
 def get_mxs(db: Session):
     """ Metodo para obtener todos los minerales """
