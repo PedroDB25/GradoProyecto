@@ -1,30 +1,47 @@
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-    }
-
-    p {
-        margin: 1em 0;
-    }
-</style>
-
 <div class="pagDocumentacion">
     <div class="datosResumen"></div>
     <div class="datosIdea">
-        <h2>Problematica</h2>
-        <p>Al estudiar una carrera surge la gran problematica de "¿donde encontrar informacion? Un problema aun mas
-            presente en carreras menos populares, donde muchas de las herramientas son libros de al menos 2000 pagina,
-            con lenguaje tencnico bastante elevado y en el peor de los casos la mejor fuente de informacion son personas
-            pesonas mayores que han trabajado en esto toda su vida.</p>
-        <p>Cuando intentamos buscar informacion sobre mineralogia optica en google tenemos principalmente dos fuentes de
-            informacion en español, la EHU y la UGR, junto con otros pequeños foros, al buscar en ingles tenemos otras
-            fuentes como seria el foro de <a href="https://www.alexstrekeisen.it/english/">Alex Strekeisen</a> o
-            <a href="webmineral.com">webmineral.com</a> foros bastantes mas completos pero mantienen un diseño que
-            parece bastente antiguo.</p>
+        <h2>Problematica y propuesta</h2>
+        <p>Al estudiar una carrera surge la gran problemática de "¿dónde encontrar información?" Un problema aun más
+            presente en carreras menos populares, donde muchas de las herramientas son libros de al menos 2000 página,
+            con lenguaje técnico bastante elevado y en el peor de los casos la mejor fuente de información son personas
+            mayores que han trabajado en esto toda su vida.</p>
+
+        <p>Cuando intentamos buscar información sobre mineralogía óptica en Google, tenemos principalmente dos fuentes
+            de información en español, la EHU y la UGR, junto con otros pequeños foros.
+            Al buscar en ingles tenemos otras fuentes como sería el foro de <a
+                href="https://www.alexstrekeisen.it/english/">Alex Strekeisen</a> o <a
+                href="webmineral.com">webmineral.com</a> foros
+            bastantes más completos, pero mantienen un diseño que parece bastente antiguo.
+        </p>
+        <p>Ya que la información entregada sigue siendo de utilidad para personas que se dediquen a la microscopia
+            óptica o estudientes de esta disciplina, pero la forma de presentarla no es la más óptima se propone la
+            creación de una API rest donde se pueda solicitar la información de los minerales y luego se pueda realizar
+            un frontend a medida de lo que se necesite.</p>
+        <p>Con esa idea en mente se plantean los siguientes requerimientos.</p>
     </div>
-    <div class="datosRequerimientos"></div>
-    <div class="datosStackTecnologias"></div>
+    <div class="datosRequerimientos">
+        <h2>Requerimientos solicitados</h2>
+        <p>-Se debe poder obtener toda la información óptica y mineralógica de un mineral por su sigla.</p>
+        <p>-Se debe poder obtener la información de todos los minerales de un grupo de minerales por su clasificación
+            mineralógica para minerales transparentes.</p>
+        <p>-Se debe poder obtener la información de todos los minerales de un grupo de minerales por su clasificación
+            química para minerales opacos.</p>
+        <p>-Se debe poder agregar un mineral transparente u opaco.</p>
+        <p>-Se realizará una capa de frontend para la demostración.</p>
+        <p>-El frontend debe consumir a la API.</p>
+        <p>-El despliegue de la aplicacion debe ser facil de realizar.</p>
+    </div>
+    <div class="datosStackTecnologias">
+        <h2>Stack tecnologico</h2>
+        <p>La primera propuesta para satisfacer los requerimientos era un modelo siguiendo el stack FARM (FastAPI,
+            React.js y MongoDB) y aunque parecia una buena solucion, me plantee el problema del despliegue de la
+            aplicacion, el cual debia ser lo mas rapido y simple posible, ya que no tenia mucha experiencia montando
+            diferentes servicios, decidi que la base de datos de MongoDB seria remplazada por una base de datos embebida
+            y el front con react pasaria a ser un frontend de JS siguiendo el estanda de ES6.
+        </p>
+
+    </div>
     <div class="datosSolucion"></div>
     <div class="datosConclusion"></div>
 

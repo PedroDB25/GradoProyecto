@@ -1,0 +1,19 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+p {
+    margin: 1em 0;
+}
+
+h2 {
+    border-bottom: 1px solid;
+}
+
+.pagDocumentacion {
+    margin: 0 3em;
+    border-radius: 2em;
+    padding: 1em;
+    background-color: #fff6f66b;
+}
