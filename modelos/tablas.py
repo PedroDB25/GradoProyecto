@@ -5,16 +5,13 @@ from dal.ORM import Base
 
 class MxTr(Base):
     __tablename__ = "mxTransmitida"
-    #mxTransmitida
 
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String)
     sigla = Column(String)
     formula = Column(String)
-
     sistema = Column(Integer)
     grupo = Column(Integer)
-
     maclas = Column(String)
     exfoliacion = Column(String)
     forma = Column(String)
@@ -76,7 +73,6 @@ class POpticas(Base):
 
 class MxRef(Base):
     __tablename__ = "mxReflejado"
-    #mxReflejado
 
     id = Column(Integer, primary_key=True, index=True)
     nombre = Column(String)

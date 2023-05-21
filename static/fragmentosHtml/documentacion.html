@@ -31,6 +31,11 @@
         <p>-Se realizará una capa de frontend para la demostración.</p>
         <p>-El frontend debe consumir a la API.</p>
         <p>-El despliegue de la aplicacion debe ser facil de realizar.</p>
+        <h2>Planificacion</h2>
+        <p>-Necesitaremos encontrar la informacion y necesitaremos tratarla.</p>
+        <p>-Necesitaremos introducir la informacion en la base de dato.</p>
+        <p>-Necesitaremos una API para consumirla.</p>
+        <p>-Necesitaremos un frontend para poder mostrar los datos y como se pueden consumir los endpoints.</p>
     </div>
     <div class="datosStackTecnologias">
         <h2>Stack tecnologico</h2>
@@ -38,11 +43,125 @@
             React.js y MongoDB) y aunque parecia una buena solucion, me plantee el problema del despliegue de la
             aplicacion, el cual debia ser lo mas rapido y simple posible, ya que no tenia mucha experiencia montando
             diferentes servicios, decidi que la base de datos de MongoDB seria remplazada por una base de datos embebida
-            y el front con react pasaria a ser un frontend de JS siguiendo el estanda de ES6.
+            como SQLite y el front con react pasaria a ser un frontend de JS siguiendo el estanda de ES6. Para la
+            extraccion de informacion se inicio utilizando herramientas como beautiful soup pero debido a que la
+            informacion estaba bastante mal estructurada lo mas facil fue utilizar herramientas como request y filtrar
+            la informacion con regex. Por lo que el stack tecnologico elegido es:
         </p>
+        <h3>Herramienta de extraccion con Request y Regex</h3>
+        <p>Como se comento anteriormente, la extraccion de informacion se realizaria con request y luego se proceso la
+            informacion con distintas regex</p>
+        <p>Las expresiones regulares son una herramienta para poder tratar cadenas de texto. Mientras que la libreria
+            request, es una herramienta para poder solicitar datos con una peticion GET a una URL.</p>
+        <h3>Despliegue y desarrollo con Docker y Git</h3>
+        <p>Aunque docker es una herramienta utilizada para despliegue de aplicaciones, como menciona la página de AWS
+            "Docker es una plataforma de software que le permite crear, probar e implementar aplicaciones rápidamente.
+            Docker empaqueta software en unidades estandarizadas llamadas contenedores que incluyen todo lo necesario
+            para que el software se ejecute, incluidas bibliotecas, herramientas de sistema, código y tiempo de
+            ejecución."
+        </p>
+        <p>Aunque está pensado como una herramienta para desplegar proyectos, este proyecto se debió realizar en
+            distintos lugares y con distintos ordenadores por lo que se requirió una herramienta con la que llevar el
+            proyecto a medio hacer, con las dependencias y con la configuracion necesaria donde fuera, que se pudiera
+            probar rapidamente y no necesitara permisos de administracion.</p>
+        <p>Ahi es donde entra Docker junto con el control de versiones de Git, con el cual se pudo llevar el proyecto
+            maquina por maquina mientras se realizaba el trabajo. Mientras que con Git</p>
+        <h3>Desarrollo BackEnd en Python con FastAPI y Base de datos en SQLite</h3>
+        <p>FastAPI es un framework para el desarrollo web que utiliza Python, su principal caracteristica es que es
+            rapido de ejecutar, rapido de escribir y pensado en realizar APIs</p>
+        <p>Aunque Python es un lenguaje caracterizado por su lentitud, FastAPI es considerado un framework rapido a la
+            altura de nodeJs o aplicacion con Go.</p>
+        <p>Para el desarrollo de este proyecto Python con FastAPI era las herramientas perfectas, ya que yo queria
+            realizar un pequeña API que fuera rapida para en su consumo y facil de programar, ademas que queria
+            refrescar mi nociones de Python, ademas que con su sistema de pip la instalacion de dependencias es bastante
+            simple lo que tambien lo hacia compatible con Docker</p>
+        <p>Para la conexion con la base de datos se utilizara el ORM de SQLAlchemy, para la eleccion de este ORM se
+            considero que, a diferencia de su competencia, trae una api mucho mas compleja y con mas opciones.</p>
+        <p>La base de datos fue una eleccion bastente complicada, al inicio al no tener muy claro como implementar las
+            tablas, y sabiendo que iba a agrupar minerales de distintos grupos que tendrian diferentes campos, la idea
+            de utilizar una base de datos noSQL era bastante atractiva, pero considerando que iba a ser un proyecto
+            pequeño, que no iba a haber mas de dos categorias de minerales y que las tablas no tendrian todos los campos
+            que se necesitarian para un proyecto completo, se decidio utilizar base de datos relacioneles.</p>
+        <p>Entre las alternativas de bases de datos relaciones, se tenian opciones mas clasicas como mySQL o sql server,
+            pero la portabilidad que ofrecen las bases de datos embebidas de poder tener todo almacenado en un unico
+            archivo, ademas de que las mayores limitantes se dan al tener que escribir en ellas y este proyecto no
+            saturaria esta funcion, llevo a que se eliguiera SQLite como la base de datos para este proyecto.</p>
+        <h3>Desarrollo Frontend</h3>
+        <p>Ya que la idea principal no es tener un Frontend muy fuerte la idea de implementar React, como se dice
+            popularmente, parecia matar moscas a cañonazos, por lo que se utilizara AJAX para el consumo de los
+            endpoints de la API.</p>
+        <p>El ES6 es el estandar de JavaScript en 2015, es considerado el estandar de JS moderno, una gran ventaja de
+            este estandar es que permite las llamadas de AJAX, que es justo lo que utilizaremos en este proyecto por lo
+            que no seria necesario en un principio la utilizacion de otras librerias para realizar las llamadas.</p>
+    </div>
+    <div class="datosSolucion">
+        <h2>Solucion del problema</h2>
+
+        <h3>Extraccion de la información</h3>
+        <p>La información esta y debemos extraerla, pero esto presenta algunas dificultades.</p>
+        <p>-No todas las paginas presentan la misma estructura para los datos, muchas paginas utilizaban tablas
+            autogeneradas que no podria identificar a que datos hacen referencia.</p>
+        <p>-Dentro de la misma pagina los datos no estan ordenados de la misma manera.</p>
+        <p>-Muchas paginas traen datos incompletos.</p>
+        <p>Asi que se selecciono a las paginas que tenian las base de datos mas grandes y se uso la libreria request
+            para acceder a sus datos y poder descargar el nodo que contenia la informacion que se buscaba.</p>
+
+        <h3>Limpiar la informacion</h3>
+        <p>Otro gran problema fue que los datos de las diferentes paginas seleccionadas tenian algunas diferencias en
+            sus datos por lo que al hacer una reflexion se decidio que ante cualquier conflicto, se iba a respetar el
+            dato mas cercano al que viniera en el libro de referencia en este tema "Nesse, W. D. (2012). Introduction to
+            mineralogy. Oxford Univ. Press.".
+        </p>
+        <p>Con ese problema solucionado el siguiente conflicto al que nos enfretamos fue poder limpiar la informacion,
+            pasandola de un bloque de HTML a un JSON que pudiera introducir en una base de datos a traves de
+            un endpoints en nuestra API. Esto se logro con ayuda de las regex, con las que se pudo limpiar la
+            informacion, cabe decir que
+            no todos los datos pudieron extraerse de esa manera, ya que algunos datos tenian caracteres diferentes.</p>
+        <h3>API</h3>
+        <p>Con la informacion ya recopilada y tratada, solo nos faltaria el endpoint por donde introducir la informacion
+            en nuestro JSON.</p>
+        <p>Asi nos encaminamos a montar nuestra API, la cual necesitara al menos X endpoint para consultar la
+            informacion e introducir los minerales que tenemos de momento en un JSON.</p>
+        <p>Esta tarea se la dejaremos al framework FastAPI, por lo que establecemos el endpoint POST /mxs, con el cual
+            podremos introducir nuestros JSON en la base de datos.</p>
+        <p>Este endpoint llama al metodo "create_mx()" el cual se encarga de serializar de JSON a un objeto de tipo MX y
+            luego lo introduce en la base de datos con ayuda del ORM.</p>
+        <p>Para extraer la informacion se ocupa un metodo parecido, esta vez con un metodo GET en el mismo endpoint y
+            como parametro la sigla del Mx que queremos su informacion.</p>
+        <p>De la misma manera existen diferentes endpoints para las diferentes tareas que se necesitan.</p>
+        <h3>Frontend</h3>
+        <p>Con la informacion dentro de la base de datos y los endpoints para consumirla, se ha llegado al punto de como
+            enseñar este trabajo, para esto se utilizaran dos sistemas, la documentacion autogenerada por Swagger y este
+            documento generado por mi.</p>
+        <p>En el documento de Swagger habra una explicacion de como utilizar los endpoint, que parametros entregarle y
+            que verbos http utilizar en cada uno.</p>
+        <p>Mientras que en este documento se explica como se ha ideado este proyecto.</p>
 
     </div>
-    <div class="datosSolucion"></div>
-    <div class="datosConclusion"></div>
+    <div class="datosConclusion">
+        <h2>Resultado y conclusion</h2>
+        <p>Finalmente con la aplicacion ya creada podemos ver si se cumplen los requerimientos determinados al inicio:
+        </p>
+        <p>1)Se debe poder obtener toda la información óptica y mineralógica de un mineral por su sigla.</p>
+        <p>-Con el endpoint /mxs se puede acceder a toda la informacion de los minerales que se tengan en la base de
+            datos.</p>
+        <p>2)Se debe poder obtener la información de todos los minerales de un grupo de minerales por su clasificación
+            mineralógica para minerales transparentes.
+        </p>
+        <p>3)Se debe poder obtener la información de todos los minerales de un grupo de minerales por su clasificación
+            química para minerales opacos.</p>
+        <p>-Con los endpoints "/gr/{gr}" y "/grrefle/{gr}" podemos acceder a todos los minerales transparentes y opacos
+            de un grupo. </p>
+        <p>4)Se debe poder agregar un mineral transparente u opaco.</p>
+        <p>-Con el endpoint "/mxs" con el metodo POST se pueden agregar minerales.</p>
+        <p>5)Se realizará una capa de frontend para la demostración.</p>
+        <p>6)El frontend debe consumir a la API.</p>
+        <p>-Se realiza un ejemplo de un Frontend y se utilizan los mencanismos de Swagger para crear una documentacion.
+        </p>
+        <p>7)El despliegue de la aplicacion debe ser facil de realizar.</p>
+        <p>-Se crea una imagen de Docker para poder desplegar la aplicacion rapidamente y de forma facil.</p>
+        <p>De esta manera hemos completado los requisitos que hemos determinado para este proyecto y hemos creado una
+            api y un pagina que consume esta API.</p>
+    </div>
 
 </div>
