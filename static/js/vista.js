@@ -280,7 +280,21 @@ async function mostrarDatosMineraltr() {
   let sigla = this.dataset.sigla
   let salida = (await solicitarMxtr(sigla)).data
 
-  document.querySelector(".modal-title").innerHTML = salida.nombre
+  //mineralogico
+  document.querySelector(".modal-title").innerHTML = `${salida.nombre} (${salida.sigla}) - ${salida.formula}`
+  document.querySelector(".sistemaGrupo").innerHTML = `Grupo / Sistema: ${traduccion(0,salida.grupo)} / ${traduccion(1,salida.sistema)}`
+  document.querySelector(".forma").innerHTML = `Forma o habito: ${salida.forma}`
+  document.querySelector(".fractura").innerHTML = `Fractura: ${salida.exfoliacion}`
+  document.querySelector(".maclas").innerHTML = `Maclas: ${salida.maclas}`
+
+  //optico
+  document.querySelector(".color").innerHTML = `Color: ${salida.color}`
+  document.querySelector(".pleocroismo").innerHTML = `Pleocroismo: ${salida.pleocroismo}`
+  document.querySelector(".IRefraccion").innerHTML = `Indices de refracción: ${salida.IRefraccion}`
+  document.querySelector(".birrefringencia").innerHTML = `Birrefringencia: ${salida.birrefringencia}`
+  document.querySelector(".extincion").innerHTML = `Extinción: ${salida.extincion}`
+  document.querySelector(".caracter").innerHTML = `Carácter optico: ${salida.signo}`
+  document.querySelector(".relieve").innerHTML = `Relieve: ${salida.relieve}`
 
   console.log(salida)
 }
@@ -298,7 +312,7 @@ async function mostrarInfo() {
   let html2 = ""
   let dato = await solicitarHTML(this.id)
 
-  link = (dato.data.html != undefined) ? `${dato.data.html}` : `${dato.data}`
+  link = link + ((dato.data.html != undefined) ? `${dato.data.html}` : `${dato.data}`)
   html2 = fetch(link).then(function (response) {
     return response.text();
   }).then(function (html) {
