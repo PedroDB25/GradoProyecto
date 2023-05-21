@@ -4,7 +4,6 @@ Clase con las llamadas a la base de datos
 import sqlite3
 from sqlite3 import Error
 from sqlalchemy.orm import Session
-
 from modelos.tablas import *
 from modelos.esquemas import mxtr
 
@@ -24,14 +23,15 @@ def probar_conexion():
         if conn:
             conn.close()
 
+
 def get_menu(db: Session):
     """ Metodo para obtener el menu de la aplicacion """
-    salida= {}
-    aux=[]
-    aux2=[]
-    aux3=[]
-    aux4=[]
-    aux5=[]
+    salida = {}
+    aux = []
+    aux2 = []
+    aux3 = []
+    aux4 = []
+    aux5 = []
 
     for lis in db.query(Menu).all():
         aux.append(lis.menu)
@@ -49,36 +49,50 @@ def get_menu(db: Session):
     salida["reflejado"] = aux3
     salida["mineralogicas"] = aux4
     salida["opticas"] = aux5
+    salida["documentacion"] = {"Documentación API", "Trabajo del grado"}
 
     return salida
+
 
 def get_html(db: Session, id):
     """ Metodo para obtener html """
     print(id)
     return db.query(Menu).filter(Menu.menu == id).first()
 
-#minerales
+# minerales
+
+
 def get_mxs(db: Session):
     """ Metodo para obtener todos los minerales """
     return db.query(MxTr).all()
+
 
 def get_mx(db: Session, id):
     """ Metodo para obtener el primer mineral con este id """
     return db.query(MxTr).filter(MxTr.id == id).first()
 
-def get_mx_by_sigla(db: Session, sigla):
-    """ Metodo para obtener el primer mineral con esta sigla """
+
+def get_mx_by_sigla_tr(db: Session, sigla):
+    """ Metodo para obtener el primer mineral no opaco con esta sigla """
     return db.query(MxTr).filter(MxTr.sigla == sigla).first()
+
+
+def get_mx_by_sigla_refle(db: Session, sigla):
+    """ Metodo para obtener el primer mineral opaco con esta sigla """
+    return db.query(MxRef).filter(MxRef.sigla == sigla).first()
+
 
 def get_mxs_by_gr(db: Session, gr):
     """ Metodo para obtener todos minerales de este grupo (transmitidos)"""
     search = f"%{gr}%"
     return db.query(MxTr).filter(MxTr.grupo.like(search)).all()
 
+
 def get_mxs_by_grrefle(db: Session, gr):
     """ Metodo para obtener todos minerales de este grupo (reflejados)"""
     search = f"%{gr}%"
     return db.query(MxRef).filter(MxRef.grupo.like(search)).all()
+
 
 def create_mx(db: Session, mxtr: mxtr):
     """ Metodo para crear minerales """

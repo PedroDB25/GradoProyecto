@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-#para docker
+# para docker
 #SQLALCHEMY_DATABASE_URL = "sqlite:///app/files/ddbb/mx.sqlite"
 SQLALCHEMY_DATABASE_URL = "sqlite:///files/ddbb/mx.sqlite"
 

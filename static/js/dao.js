@@ -14,13 +14,20 @@ function solicitarHTML(id) {
         .catch(err => console.log('Solicitud fallida', err)); // Capturar errores
 
 }
-function solicitarMx(id) {
-    return fetch("mxs/" + id)
+function solicitarMxtr(sigla) {
+    return fetch("mxtr/" + sigla)
         // Exito
         .then(response => response.json())  // convertir a json
         .then(json => json)    //sacar json
         .catch(err => console.log('Solicitud fallida', err)); // Capturar errores
 
+}
+function solicitarMxrefl(sigla) {
+    return fetch("mxrefl/" + sigla)
+        // Exito
+        .then(response => response.json())  // convertir a json
+        .then(json => json)    //sacar json
+        .catch(err => console.log('Solicitud fallida', err)); // Capturar errores
 }
 function solicitarGr(gr) {
     return fetch("gr/" + gr)

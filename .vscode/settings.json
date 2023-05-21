@@ -11,5 +11,7 @@
     "settings": {
         "python.pythonPath": "/workspaces/GradoProyecto",
         "python.venvPath": "/workspaces/GradoProyecto"
-    }
+    },
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }

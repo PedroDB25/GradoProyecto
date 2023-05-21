@@ -26,6 +26,10 @@ function cargarMenu(menuDescargado) {
       document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.mineralogicas, 3))
       continue
     }
+    if (li.search('Documentación') >= 0) {
+      document.querySelector(".navbar-nav").appendChild(crearDesplegable(li, menuDescargado.documentacion, 4))
+      continue
+    }
     else {
       let aux = document.createElement("li")
       aux.className = "nav-item"
@@ -82,6 +86,18 @@ function crearDesplegable(li, opcion, indice) {
     if (indice == 1) {
       auxAInterno.addEventListener("click", mostrarGrupoReflejada)
     }
+    if (indice == 2 || indice == 3) {
+      auxAInterno.id = lis.split(" ")[0].replaceAll(" ", "_").replaceAll(".", "")
+      auxAInterno.addEventListener("click", mostrarInfo)
+    }
+    if (indice == 4) {
+      if (lis == "Trabajo del grado") {
+        auxAInterno.href = "/docs"
+      } else {
+        auxAInterno.id = lis.split(" ")[0].replaceAll(" ", "_").replaceAll(".", "")
+        auxAInterno.addEventListener("click", mostrarInfo)
+      }
+    }
 
     auxliInterno.appendChild(auxAInterno)
     listaDesplegable.appendChild(auxliInterno)
@@ -123,12 +139,12 @@ async function mostrarGrupoReflejada() {
     img.src = `/static/img/0${mx.sigla}.png`
     nombreYsigla.innerHTML = `${mx.nombre}(${mx.sigla})`;
     formula.innerHTML = `<code>${mx.formula.replaceAll(" ", "")}</code>`;
-    grupo.innerHTML = `${traduccion(2,mx.grupo.toString())}`;
+    grupo.innerHTML = `${traduccion(2, mx.grupo.toString())}`;
 
     img.className = "img-fluid imagen";
     img.setAttribute("onerror", `this.src="/static/img/error.png"`)
-    cartablock.dataset.bsToggle = "modal"
-    cartablock.dataset.bsTarget = "#exampleModal"
+    //cartablock.dataset.bsToggle = "modal"
+    //cartablock.dataset.bsTarget = "#exampleModal"
 
     formula.className = "formula";
 
@@ -169,8 +185,9 @@ async function mostrarGrupoReflejada() {
     cartadentro.appendChild(cartafront)
     cartadentro.appendChild(cartaback)
     cartablock.appendChild(cartadentro)
+    cartablock.dataset.sigla = mx.sigla
     LinkParaPedirDatos.appendChild(cartablock)
-    cartablock.addEventListener("click", mostrarDatosMineral)
+    //cartablock.addEventListener("click", mostrarDatosMineralrefle)
     document.querySelector(".body").appendChild(LinkParaPedirDatos)
   }
 
@@ -207,8 +224,8 @@ async function mostrarGrupoTransmitida() {
     img.src = `/static/img/0${mx.sigla}.png`
     nombreYsigla.innerHTML = `${mx.nombre}(${mx.sigla})`;
     formula.innerHTML = `<code>${mx.formula.replaceAll(" ", "")}</code>`;
-    grupo.innerHTML = `${traduccion(0,mx.grupo)}`;
-    sistema.innerHTML = `${traduccion(1,mx.sistema)}`;
+    grupo.innerHTML = `${traduccion(0, mx.grupo)}`;
+    sistema.innerHTML = `${traduccion(1, mx.sistema)}`;
 
     img.className = "img-fluid imagen";
     img.setAttribute("onerror", `this.src="/static/img/error.png"`)
@@ -253,41 +270,57 @@ async function mostrarGrupoTransmitida() {
     cartadentro.appendChild(cartafront)
     cartadentro.appendChild(cartaback)
     cartablock.appendChild(cartadentro)
+    cartablock.dataset.sigla = mx.sigla
     LinkParaPedirDatos.appendChild(cartablock)
-    cartablock.addEventListener("click", mostrarDatosMineral)
+    cartablock.addEventListener("click", mostrarDatosMineraltr)
     document.querySelector(".body").appendChild(LinkParaPedirDatos)
   }
 }
-async function mostrarDatosMineral() {
-  console.log(this)
+async function mostrarDatosMineraltr() {
+  let sigla = this.dataset.sigla
+  let salida = (await solicitarMxtr(sigla)).data
+
+  document.querySelector(".modal-title").innerHTML = salida.nombre
+
+  console.log(salida)
+}
+async function mostrarDatosMineralrefle() {
+  let sigla = this.dataset.sigla
+  let salida = (await solicitarMxrefl(sigla)).data
+
+  document.querySelector(".modal-title").innerHTML = salida.nombre
+
+  console.log(salida)
 }
 async function mostrarInfo() {
   document.querySelector(".body").innerHTML = ""
+  let link = "static\\fragmentosHtml\\"
   let html2 = ""
   let dato = await solicitarHTML(this.id)
-  let link = `static\\fragmentosHtml\\${dato.data.html}`
-  html2 =fetch(link).then(function (response) {
+
+  link = (dato.data.html != undefined) ? `${dato.data.html}` : `${dato.data}`
+  html2 = fetch(link).then(function (response) {
     return response.text();
   }).then(function (html) {
     var parser = new DOMParser();
     var doc = parser.parseFromString(html, 'text/html');
-    return  doc
+    return doc
   });
   document.querySelector(".body").innerHTML = (await html2).querySelector("body").innerHTML
 }
-function traduccion (n, texto){
+function traduccion(n, texto) {
   let salida = ""
   texto = texto.replaceAll(/[\[\] ,-]/g, "")
-  if(n==0){
+  if (n == 0) {
     return `${maps(0).get(parseInt(texto))}`
   }
-  if(n==1){
+  if (n == 1) {
     for (const str of texto.split("")) {
       salida = `${salida}, ${maps(1).get(parseInt(str))}`
     }
     return salida.substring(2)
   }
-  if(n==2){
+  if (n == 2) {
     return `${maps(2).get(parseInt(texto))}`
   }
 }
@@ -328,5 +361,5 @@ function maps(n) {
 
     return map1
   }
-  
+
 }
