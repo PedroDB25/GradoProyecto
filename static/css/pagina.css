@@ -1,8 +1,9 @@
-nav{
+nav {
     height: 8vh;
 }
+
 .body {
-    background: linear-gradient(to left top,gray,white, rgba(0, 0, 255, 0.192),  white);
+    background: linear-gradient(to left top, gray, white, rgba(0, 0, 255, 0.192), white);
     min-height: 85vh;
     display: flex;
     flex-wrap: wrap;
@@ -14,4 +15,28 @@ nav{
 .footer {
     background-color: yellowgreen;
     height: 7vh;
+}
+.alteracion,
+.birrefringencia,
+.brillo,
+.color,
+.dureza,
+.exfoliacion,
+.Relieve,
+.pleocroismo,
+.Macla,
+.habito,
+.forma,
+.extincion {
+    margin: 0 2em;
+}
+.fotos {
+    display: flex;
+    gap: 2em;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+.fotos p{
+    word-wrap: break-word;
+    width: 35em;
 }
