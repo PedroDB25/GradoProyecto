@@ -2,6 +2,7 @@
 Clase con las llamadas a la base de datos
 """
 import sqlite3
+import os
 from sqlite3 import Error
 from sqlalchemy.orm import Session
 from modelos.tablas import *
@@ -101,3 +102,11 @@ def create_mx(db: Session, mxtr: mxtr):
     db.commit()
     db.refresh(db_item)
     return True
+
+def get_imgs():
+    salida:list = []
+    for img in (os.listdir("./static/img")):
+        if ("0" in img or ".py" in img or "error" in img):
+            continue 
+        salida.append(img)
+    return salida

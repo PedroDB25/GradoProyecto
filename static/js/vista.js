@@ -1,12 +1,10 @@
 window.onload = () => {
   inicio()
 }
-
 async function inicio() {
   let menuDescargado = await solicitarMenu()
   cargarMenu(menuDescargado.data)
 }
-
 function cargarMenu(menuDescargado) {
   for (const li of menuDescargado.menu) {
     //link para
@@ -48,7 +46,6 @@ function cargarMenu(menuDescargado) {
     }
   }
 }
-
 function crearDesplegable(li, opcion, indice) {
   contador = 0;
   //boton en barra
@@ -282,7 +279,7 @@ async function mostrarDatosMineraltr() {
 
   //mineralogico
   document.querySelector(".modal-title").innerHTML = `${salida.nombre} (${salida.sigla}) - ${salida.formula}`
-  document.querySelector(".sistemaGrupo").innerHTML = `Grupo / Sistema: ${traduccion(0,salida.grupo)} / ${traduccion(1,salida.sistema)}`
+  document.querySelector(".sistemaGrupo").innerHTML = `Grupo / Sistema: ${traduccion(0, salida.grupo)} / ${traduccion(1, salida.sistema)}`
   document.querySelector(".forma").innerHTML = `Forma o habito: ${salida.forma}`
   document.querySelector(".fractura").innerHTML = `Fractura: ${salida.exfoliacion}`
   document.querySelector(".maclas").innerHTML = `Maclas: ${salida.maclas}`
@@ -321,6 +318,21 @@ async function mostrarInfo() {
     return doc
   });
   document.querySelector(".body").innerHTML = (await html2).querySelector("body").innerHTML
+  mostrarImagenes()
+}
+async function mostrarImagenes() {
+  let marco = document.querySelector(".fotos")
+  let imagenes = await solicitarimagenes()
+  let base = "/static/img/"
+  for (const imag of imagenes.data) {
+    let foto = document.createElement("div")
+    foto.className = "foto"
+    let img = document.createElement("img")
+    img.src = base + imag
+    foto.appendChild(img)
+    marco.appendChild(foto)
+  }
+
 }
 function traduccion(n, texto) {
   let salida = ""

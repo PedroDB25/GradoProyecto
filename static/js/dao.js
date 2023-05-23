@@ -10,7 +10,8 @@ function solicitarHTML(id) {
     return fetch(`html?id=${id}`)
         // Exito
         .then(response => response.json())  // convertir a json
-        .then(json => json)    //sacar json
+        .then(json => json)
+        //sacar json
         .catch(err => console.log('Solicitud fallida', err)); // Capturar errores
 
 }
@@ -39,6 +40,13 @@ function solicitarGr(gr) {
 }
 function solicitarGrRefl(gr) {
     return fetch("grrefle/" + gr)
+        // Exito
+        .then(response => response.json())  // convertir a json
+        .then(json => json)    //sacar json
+        .catch(err => console.log('Solicitud fallida', err)); // Capturar errores
+
+} function solicitarimagenes() {
+    return fetch("imgs/")
         // Exito
         .then(response => response.json())  // convertir a json
         .then(json => json)    //sacar json

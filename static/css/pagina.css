@@ -16,27 +16,33 @@ nav {
     background-color: yellowgreen;
     height: 7vh;
 }
+
 .alteracion,
 .birrefringencia,
 .brillo,
+.caracter,
 .color,
 .dureza,
 .exfoliacion,
 .Relieve,
+.peso,
 .pleocroismo,
 .Macla,
 .habito,
 .forma,
-.extincion {
+.extincion,
+.otros {
     margin: 0 2em;
 }
+
 .fotos {
     display: flex;
     gap: 2em;
     justify-content: space-around;
     flex-wrap: wrap;
 }
-.fotos p{
+
+.fotos p {
     word-wrap: break-word;
     width: 35em;
 }

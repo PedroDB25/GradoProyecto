@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 import uvicorn
 from modelos.response import response
 from dal.ORM import SessionLocal, engine, Base
-from dal.mxdao import get_menu, get_html, get_mxs, get_mx, get_mx_by_sigla_tr , get_mx_by_sigla_refle, get_mxs_by_gr, get_mxs_by_grrefle, probar_conexion
+from dal.mxdao import get_menu, get_html, get_mxs, get_mx, get_mx_by_sigla_tr , get_mx_by_sigla_refle, get_mxs_by_gr, get_mxs_by_grrefle, probar_conexion,get_imgs
 from modelos.esquemas import mxtr
 
 
@@ -132,12 +132,17 @@ async def root(request: Request):
 async def retornar_menu(db: Session = Depends(get_db)):
     return response(get_menu(db), estado=200, mensaje="Success")
 
+# Retorna una lista de imagenes en la carpeta img
+@app.get("/imgs", include_in_schema=False)
+async def retornar_menu(db: Session = Depends(get_db)):
+    return response(get_imgs(), estado=200, mensaje="Success")
+
 # Retorna el fragmento solicitado
 
 
 @app.get("/html", include_in_schema=False)
 async def retornar_fragmento(db: Session = Depends(get_db), id: str = ""):
-    if (id == "Inicio" or id == "Documentación" or id ==  "Imagenes"):
+    if (id == "Documentación"):
         return response(get_html(db, id), estado=200, mensaje="Success")
     return response(id+".html", estado=200, mensaje="Success")
 
